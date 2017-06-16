@@ -1,7 +1,12 @@
 # mequetrefe-exporter
-A exporter for prometheus based on shell commands.
+A exporter for [prometheus](http://prometheus.io) based on shell commands.
 
-Not working propperly!
+I don't know where I use it... if you found advise-me. :p
 
 TODO:
-Implement using prometheus lib!
+
+- Improve the data structure to support labels, descriptions...
+- Validate the YAML "config" file
+- Prevent invalid data on metrics. Eg strings
+
+and a lot of things... 

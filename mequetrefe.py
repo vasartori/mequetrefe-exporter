@@ -1,7 +1,8 @@
 import argparse
 import yaml
 import subprocess
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from prometheus_client import Metric, start_http_server, REGISTRY
+import time
 
 
 def cmd_args():
@@ -26,26 +27,24 @@ def get_metrics(commands):
     return metrics
 
 
-def start():
+def prepare_start():
     args = cmd_args()
     cfg = read_config_file(args.config_file)
     return get_metrics(cfg)
 
+class Prom():
+    def __init__(self, metrics):
+        self.metrics = metrics
 
-class HTTPServer_RequestHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
-        self.end_headers()
-        message = start()
-        for k, v in message.items():
-            self.wfile.write(bytes("# HELP " + k + " Default\r\n", "utf8"))
-            self.wfile.write(bytes("# TYPE " + k + " summary\r\n", "utf8"))
-            self.wfile.write(bytes(str(k) + ' ' + str(v) + "\r\n", "utf8"))
-        return
-
+    def collect(self):
+        for k, v in self.metrics.items():
+            metric = Metric(k, 'teste', 'gauge')
+            metric.add_sample(k,value=v, labels={})
+            print('collect')
+            yield metric
 
 if __name__ == '__main__':
-    server_address = ('127.0.0.1', 8081)
-    httpd = HTTPServer(server_address, HTTPServer_RequestHandler)
-    httpd.serve_forever()
+    start_http_server(8000)
+    REGISTRY.register(Prom(metrics=prepare_start()))
+    while True:
+        time.sleep(1)
