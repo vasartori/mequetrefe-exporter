@@ -1,7 +1,7 @@
 # mequetrefe-exporter
 A exporter for [prometheus](http://prometheus.io) based on shell commands.
 
-I don't know where I use it... if you found advise-me. :p
+I don't know where I use it... if you found, let me know. :p
 
 TODO:
 
