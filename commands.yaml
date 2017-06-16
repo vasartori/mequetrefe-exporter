@@ -1,0 +1,3 @@
+- metrica1: ls -1|wc -l
+- metrica2: date +%s
+- metrica3: echo "123445"
