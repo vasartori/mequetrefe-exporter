@@ -40,7 +40,6 @@ class Prom():
         for k, v in self.metrics.items():
             metric = Metric(k, 'teste', 'gauge')
             metric.add_sample(k,value=v, labels={})
-            print('collect')
             yield metric
 
 if __name__ == '__main__':
