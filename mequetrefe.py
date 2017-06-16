@@ -32,14 +32,15 @@ def prepare_start():
     cfg = read_config_file(args.config_file)
     return get_metrics(cfg)
 
-class Prom():
+
+class Prom:
     def __init__(self, metrics):
         self.metrics = metrics
 
     def collect(self):
         for k, v in self.metrics.items():
             metric = Metric(k, 'teste', 'gauge')
-            metric.add_sample(k,value=v, labels={})
+            metric.add_sample(k, value=v, labels={})
             yield metric
 
 if __name__ == '__main__':
